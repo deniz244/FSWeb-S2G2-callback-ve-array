@@ -25,12 +25,19 @@ const { fifaData } = require('./fifa.js')
 	💡 İPUCU - verilen data içindeki nesnelerin(objects) "Stage" anahtarına bakmalısınız
 */
 
-function Finaller(/* kodlar buraya */) {
+function Finaller(dizi) {
+	const finaller = [];
+
+	for(let i = 0; i<dizi.length; i++){
+		if(dizi[i].Stage === "Final"){
+			finaller.push(dizi[i]);
+		}
+	}
 	
-    /* kodlar buraya */
+    return finaller;
 }
 
-
+console.log(Finaller(fifaData));
 
 /*  Görev 3: 
 	Bir higher-order fonksiyonu olan Yillar isimli fonksiyona aşağıdakileri uygulayın: 
@@ -39,11 +46,15 @@ function Finaller(/* kodlar buraya */) {
 	3. Finaller data setindeki tüm yılları içeren "years" adındaki diziyi(array) döndürecek
 	*/
 
-function Yillar(/* kodlar buraya */) {
+function Yillar(dizi,finalFn) {
+
+	finalFn(dizi); //  fifaData'da Stage === "Final" olan objeler dizisini return ediyor
 	
-    /* kodlar buraya */
+	
+
 }
 
+console.log(Yillar(fifaData,Finaller));
 
 /*  Görev 4: 
 	Bir higher-order fonksiyonunu olan Kazananlar isimli fonksiyona aşağıdakileri uygulayın:  
@@ -53,13 +64,15 @@ function Yillar(/* kodlar buraya */) {
 	💡 İPUCU: Beraberlikler(ties) için şimdilik endişelenmeyin (Detaylı bilgi için README dosyasına bakabilirsiniz.)
 	4. Tüm kazanan ülkelerin isimlerini içeren `kazananlar` adında bir dizi(array) döndürecek(return)  */ 
 
-function Kazananlar(/* kodlar buraya */) {
+function Kazananlar(dizi,finalFn) {
 	
-    /* kodlar buraya */
+    
+	
+	//finalFn(dizi)
 	
 }
 
-
+Kazananlar(fifaData,Finaller);
 
 /*  Görev 5: 
 	Bir higher-order fonksiyonu olan YillaraGoreKazananlar isimli fonksiyona aşağıdakileri uygulayın:
