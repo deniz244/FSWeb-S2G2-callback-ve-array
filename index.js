@@ -7,7 +7,7 @@ const { fifaData } = require('./fifa.js')
 	💡 İPUCU: Öncelikle datayı filtrelemek isteyebilirsiniz */
 
 //(a) 2014 Dünya kupası Finali Evsahibi takım ismi (dizide "Home Team Name" anahtarı)
-
+//console.log("2014 Dünya kupası Finali Evsahibi takım ismi",fifaData.filter((evSahibi) => {return evSahibi.Year === 2014 }));
 //(b) 2014 Dünya kupası Finali Deplasman takım ismi  (dizide "Away Team Name" anahtarı)
 
 //(c) 2014 Dünya kupası finali Ev sahibi takım golleri (dizide "Home Team Goals" anahtarı)
@@ -26,7 +26,12 @@ const { fifaData } = require('./fifa.js')
 */
 
 function Finaller(dizi) {
-	const finaller = [];
+
+	const finaller = dizi.filter((eleman) => {return eleman.Stage === "Final"} )
+
+	return finaller
+
+	/*const finaller = [];
 
 	for(let i = 0; i<dizi.length; i++){
 		if(dizi[i].Stage === "Final"){
@@ -34,7 +39,7 @@ function Finaller(dizi) {
 		}
 	}
 	
-    return finaller;
+    return finaller;*/
 }
 
 console.log(Finaller(fifaData));
@@ -48,8 +53,6 @@ console.log(Finaller(fifaData));
 
 function Yillar(dizi,finalFn) {
 
-	finalFn(dizi); //  fifaData'da Stage === "Final" olan objeler dizisini return ediyor
-	
 	
 
 }
@@ -67,8 +70,7 @@ console.log(Yillar(fifaData,Finaller));
 function Kazananlar(dizi,finalFn) {
 	
     
-	
-	//finalFn(dizi)
+
 	
 }
 
