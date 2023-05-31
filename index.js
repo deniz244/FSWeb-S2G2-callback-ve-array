@@ -160,22 +160,31 @@ OrtalamaGolSayisi(Finaller(fifaData));
 
 function UlkelerinKazanmaSayilari(dizi,kisaltma) {
 
-	/*let count = 0;
-	
-    const kupaSayisi = dizi.reduce((eleman,kupa) => {
-		if(eleman['Home Team Initials'] === kisaltma && eleman.Stage === "Final"){
-			kupa = count++;
-			return kupa;
+	const finalMaclari = dizi.filter((eleman) => eleman.Stage === "Final");
+
+	const kazananlar = finalMaclari.map((eleman) => {
+		if(eleman["Home Team Goals"] > eleman['Away Team Goals'] ){
+			return eleman['Home Team Initials'];
 		}
-		else if(eleman['Away Team Initials'] === kisaltma && eleman.Stage === "Final"){
-			kupa = count++;
-			return kupa;
+		else{
+		  	return eleman['Away Team Initials'];
 		}
 	});
+	
+	/*const kazanmaSay = kazananlar.reduce((toplam,eleman) => {
+		console.log("reduce",toplam,eleman)
+		if(eleman === kisaltma){
+			return toplam +1;
+		}
+		else{
+			return toplam
+		}
+	}, 0);*/
 
-	console.log("kupa sayısı",kupaSayisi); */
+	//yukardakinin dah kısa hali
+	const kazanmaSay = kazananlar.filter((eleman) => eleman ===kisaltma).length;
 
-	//return  kupaSayisi + "dünya kupası var "
+	return kazanmaSay
 	
 }
 
@@ -186,38 +195,57 @@ EnCokGolAtan() isminde bir fonksiyon yazın, `data` yı parametre olarak alsın 
 
 function EnCokGolAtan(dizi) {
 	
-    const finaller = dizi.filter((evSahibi) => {return evSahibi.Stage === "Final" });
-	const enCokGolAtan = finaller.map((eleman) => {
-		if(eleman["Home Team Goals"] > eleman["Away Team Goals"]){
-			return eleman["Home Team Name"]
-		}else{
-			return eleman["Away Team Name"]
+    const finaller = dizi.filter((evSahibi) => evSahibi.Stage === "Final");
+	
+	const takimSkorlari = finaller.map(((eleman) =>{
+		return {
+			[eleman["Home Team Initials"]]: eleman["Home Team Goals"],
+			[eleman["Away Team Initials"]]: eleman["Away Team Goals"]
 		}
-	});
+	}));
 
-	console.log("en çok gol atan", enCokGolAtan[0]);
+	const takimVeGol = takimSkorlari
+	.map((obj) => Object.entries(obj))
+		.reduce((acc,pairs) =>{
+			pairs.forEach(([key,value]) => {
+				acc[key] = (acc[key] || 0) + value;
+			});
+			return acc;
+	},{});
 
-	return enCokGolAtan[0]
+	const sorted = Object.entries(takimVeGol).sort((a,b) => b[1]-a[1]);
+	console.log("soted",sorted)
+	return sorted[0][0]
 }
+
 EnCokGolAtan(fifaData);
 
 /*  BONUS 3: 
 EnKotuDefans() adında bir fonksiyon yazın, `data` yı parametre olarak alsın ve Dünya kupasında finallerinde en çok golü yiyen takımı döndürsün*/
 
 function EnKotuDefans(dizi) {
+
+	const finaller = dizi.filter((evSahibi) => evSahibi.Stage === "Final");
 	
-    const finaller = dizi.filter((evSahibi) => {return evSahibi.Stage === "Final" });
-	const enCokGolYiyen = finaller.map((eleman) => {
-		if(eleman["Home Team Goals"] < eleman["Away Team Goals"]){
-			return eleman["Home Team Name"]
-		}else{
-			return eleman["Away Team Name"]
+	const takimSkorlari = finaller.map(((eleman) =>{
+		return {
+			[eleman["Away Team Initials"]]: eleman["Home Team Goals"],
+			[eleman["Home Team Initials"]]: eleman["Away Team Goals"]
 		}
-	});
+	}));
 
-	console.log("en çok gol yiyen", enCokGolYiyen);
+	const takimVeGol = takimSkorlari
+	.map((obj) => Object.entries(obj))
+		.reduce((acc,pairs) =>{
+			pairs.forEach(([key,value]) => {
+				acc[key] = (acc[key] || 0) + value;
+			});
+			return acc;
+	},{});
 
-	return enCokGolYiyen[0]
+	const sorted = Object.entries(takimVeGol).sort((a,b) => b[1]-a[1]);
+	console.log("soted",sorted)
+	return sorted[0][0]
 	
 }
 EnKotuDefans(fifaData);
