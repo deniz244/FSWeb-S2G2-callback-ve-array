@@ -159,8 +159,23 @@ OrtalamaGolSayisi(Finaller(fifaData));
 İpucu: `.reduce` Kullanın*/
 
 function UlkelerinKazanmaSayilari(dizi,kisaltma) {
+
+	/*let count = 0;
 	
-    /* kodlar buraya */
+    const kupaSayisi = dizi.reduce((eleman,kupa) => {
+		if(eleman['Home Team Initials'] === kisaltma && eleman.Stage === "Final"){
+			kupa = count++;
+			return kupa;
+		}
+		else if(eleman['Away Team Initials'] === kisaltma && eleman.Stage === "Final"){
+			kupa = count++;
+			return kupa;
+		}
+	});
+
+	console.log("kupa sayısı",kupaSayisi); */
+
+	//return  kupaSayisi + "dünya kupası var "
 	
 }
 
@@ -171,8 +186,18 @@ EnCokGolAtan() isminde bir fonksiyon yazın, `data` yı parametre olarak alsın 
 
 function EnCokGolAtan(dizi) {
 	
-    
-	
+    const finaller = dizi.filter((evSahibi) => {return evSahibi.Stage === "Final" });
+	const enCokGolAtan = finaller.map((eleman) => {
+		if(eleman["Home Team Goals"] > eleman["Away Team Goals"]){
+			return eleman["Home Team Name"]
+		}else{
+			return eleman["Away Team Name"]
+		}
+	});
+
+	console.log("en çok gol atan", enCokGolAtan[0]);
+
+	return enCokGolAtan[0]
 }
 EnCokGolAtan(fifaData);
 
@@ -181,7 +206,18 @@ EnKotuDefans() adında bir fonksiyon yazın, `data` yı parametre olarak alsın 
 
 function EnKotuDefans(dizi) {
 	
-    /* kodlar buraya */
+    const finaller = dizi.filter((evSahibi) => {return evSahibi.Stage === "Final" });
+	const enCokGolYiyen = finaller.map((eleman) => {
+		if(eleman["Home Team Goals"] < eleman["Away Team Goals"]){
+			return eleman["Home Team Name"]
+		}else{
+			return eleman["Away Team Name"]
+		}
+	});
+
+	console.log("en çok gol yiyen", enCokGolYiyen);
+
+	return enCokGolYiyen[0]
 	
 }
 EnKotuDefans(fifaData);
